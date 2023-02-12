@@ -8,20 +8,32 @@ function getComputerChoice() {
   return CHOICES[index];
 }
 
-function getPlayerChoice() {
-  let choice = prompt("Rock, Paper, or Scissors?");
-  const parseChoice = () => choice.toLowerCase();
-  
-  while (!CHOICES.includes(parseChoice())) {
-    choice = prompt(`Whaddya mean, "${parseChoice()}"? Don't you know how to play this game? Rock, Paper, or Scissors?!`);
+function getPlayerChoice() {  
+  let choice = prompt("Rock, Paper, or Scissors?"); 
+  const parsedChoice = () => choice?.toLowerCase(); 
+ 
+  while (!CHOICES.includes(parsedChoice())) {
+    let promptMessage;
+    
+    if (choice === '') {
+      promptMessage = 'You can\'t play unless you give me something! Rock, Paper, or Scissors?'
+    } else if (choice) {
+      promptMessage = `Whaddya mean, "${choice}"? Don't you know how to play this game? Rock, Paper, or Scissors?!`;
+    } else {
+      promptMessage = 'Don\'t you want to play???';
+    }
+
+    choice = prompt(promptMessage);
   }
 
-  return parseChoice();
+  return parsedChoice();
 }
 
+// log round result and return an index representing the winner
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === computerSelection) {
-    return `Tie! Both players chose ${playerSelection}.`;
+    console.log(`Draw! You both chose ${playerSelection}.`);
+    return -1;
   }
 
   const outcome = [playerSelection, computerSelection];
@@ -31,15 +43,56 @@ function playRound(playerSelection, computerSelection) {
     [SCISSORS, PAPER]
   ];
 
-  if (playerWinScenarios.find((scenario) => {
-    return scenario[0] === outcome[0] && scenario[1] === outcome[1];
-  })) {
-    return `You win! ${playerSelection} beats ${computerSelection}`;
+  if (playerWinScenarios.find((scenario) => scenario.toString() === outcome.toString())) {
+    console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+    return 0;
   } else {
-    return `You lose! ${computerSelection} beats ${playerSelection}`;
+    console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
+    return 1;
   }
 }
 
-const playerChoice = getPlayerChoice();
-const computerChoice = getComputerChoice();
-console.log(playRound(playerChoice, computerChoice));
+function logScore(score) {
+  console.log(`You: ${score[0]}, Computer: ${score[1]}`);
+}
+
+function logFinalResults(score) {
+  console.log('\nFINAL SCORE');
+  logScore(score);
+  
+  if (score[0] > score[1]) {
+    console.log('You Win!');
+  } else if (score[0] < score[1]) {
+    console.log('You Lose!');
+  } else {
+    console.log('Wow, I guess nobody wins lol');
+  }
+}
+
+function game() {
+  const totalRounds = 5;
+  let score = [0, 0]; // player, computer
+
+  for (let round = 0; round < totalRounds; round++) {
+    console.log(`\nROUND ${round + 1}`);
+    
+    let winnerIndex = playRound(getPlayerChoice(), getComputerChoice());
+
+    if (winnerIndex >= 0) { // add to score if it wasn't a tie
+      score[winnerIndex]++;
+    }
+
+    // end game if there's a winner
+    // don't log 'Current Score' on last iteration
+    if (score[0] > 2 || score[1] > 2 || round === totalRounds - 1) {
+      break;
+    }
+
+    console.log('Current Score:');
+    logScore(score);
+  }
+
+  logFinalResults(score);
+}
+
+game();
