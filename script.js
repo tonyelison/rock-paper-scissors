@@ -77,10 +77,7 @@ function game() {
     console.log(`\nROUND ${round + 1}`);
     
     let winnerIndex = playRound(getPlayerChoice(), getComputerChoice());
-
-    if (winnerIndex >= 0) { // add to score if it wasn't a tie
-      score[winnerIndex]++;
-    }
+    score[winnerIndex]++;
 
     // end game if there's a winner
     // don't log 'Current Score' on last iteration
