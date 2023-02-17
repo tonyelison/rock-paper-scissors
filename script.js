@@ -25,7 +25,7 @@ function playerSelectionEvent() {
 }
 
 function getComputerChoice() {
-  let index = Math.floor(Math.random() * 3); // 0, 1, or 2
+  const index = Math.floor(Math.random() * 3); // 0, 1, or 2
   return CHOICES[index];
 }
 
