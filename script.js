@@ -31,10 +31,6 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-function logScore(score) {
-  console.log(`You: ${score[0]}, Computer: ${score[1]}`);
-}
-
 function buttonEvent() {
   const playerChoice = this.dataset.choice;
   playRound(playerChoice, getComputerChoice());
@@ -59,6 +55,10 @@ buttons.forEach((btn) => btn.addEventListener("click", buttonEvent));
 //   } else {
 //     console.log('Wow, I guess nobody wins lol');
 //   }
+// }
+
+// function logScore(score) {
+//   console.log(`You: ${score[0]}, Computer: ${score[1]}`);
 // }
 
 // function game() {
