@@ -3,7 +3,7 @@ const PAPER = 'paper';
 const SCISSORS = 'scissors';
 const CHOICES = [ROCK, PAPER, SCISSORS];
 
-const winningScore = 5;
+const WINNING_SCORE = 5;
 let score = [0, 0]; // [player score, computer score]
 
 const playerButtons = document.querySelectorAll("#player-buttons button");
@@ -17,9 +17,9 @@ function playerSelectionEvent() {
   const winnerIndex = playRound(playerChoice, getComputerChoice());
   score[winnerIndex]++;
 
-  if (score[0] === winningScore) {
+  if (score[0] === WINNING_SCORE) {
     gameOver("YOU WIN!");
-  } else if (score[1] === winningScore) {
+  } else if (score[1] === WINNING_SCORE) {
     gameOver("YOU LOSE");
   }
 }
