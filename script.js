@@ -4,7 +4,11 @@ const SCISSORS = 'scissors';
 const CHOICES = [ROCK, PAPER, SCISSORS];
 
 const WINNING_SCORE = 5;
-let score = [0, 0]; // [player score, computer score]
+const score = { player: 0, computer: 0 };
+
+const playerScoreElem = document.getElementById("player");
+const computerScoreElem = document.getElementById("computer");
+setScoreDisplay();
 
 const playerButtons = document.querySelectorAll("#player-buttons button");
 playerButtons.forEach((btn) => btn.addEventListener("click", playerSelectionEvent));
@@ -14,12 +18,13 @@ playAgainBtn.addEventListener("click", resetGame);
 
 function playerSelectionEvent() {
   const playerChoice = this.dataset.choice;
-  const winnerIndex = playRound(playerChoice, getComputerChoice());
-  score[winnerIndex]++;
+  const winner = playRound(playerChoice, getComputerChoice());
+  score[winner]++;
+  setScoreDisplay();
 
-  if (score[0] === WINNING_SCORE) {
+  if (score.player === WINNING_SCORE) {
     gameOver("YOU WIN!");
-  } else if (score[1] === WINNING_SCORE) {
+  } else if (score.computer === WINNING_SCORE) {
     gameOver("YOU LOSE");
   }
 }
@@ -27,6 +32,11 @@ function playerSelectionEvent() {
 function getComputerChoice() {
   const index = Math.floor(Math.random() * 3); // 0, 1, or 2
   return CHOICES[index];
+}
+
+function setScoreDisplay() {
+  playerScoreElem.textContent = score.player;
+  computerScoreElem.textContent = score.computer;
 }
 
 function setGameMessage(message) {
@@ -41,14 +51,18 @@ function gameOver(message) {
 }
 
 function resetGame() {
-  score = [0, 0];
+  score.player = 0;
+  score.computer = 0;
+
+  setScoreDisplay();
   setGameMessage();
+
   playAgainBtn.style.display = "none";
   playerButtons.forEach((btn) => btn.disabled = false);
 }
 
 /*
-Display round result. Return an index representing the winner.
+Display round result, return winner
 */
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === computerSelection) {
@@ -65,9 +79,9 @@ function playRound(playerSelection, computerSelection) {
 
   if (playerWinScenarios.find((scenario) => scenario.toString() === outcome.toString())) {
     setGameMessage(`You win! ${playerSelection} beats ${computerSelection}`);
-    return 0;
+    return 'player';
   } else {
     setGameMessage(`You lose! ${computerSelection} beats ${playerSelection}`);
-    return 1;
+    return 'computer';
   }
 }
