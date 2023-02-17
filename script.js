@@ -8,27 +8,6 @@ function getComputerChoice() {
   return CHOICES[index];
 }
 
-function getPlayerChoice() {  
-  let choice = prompt("Rock, Paper, or Scissors?"); 
-  const parsedChoice = () => choice?.toLowerCase(); 
- 
-  while (!CHOICES.includes(parsedChoice())) {
-    let promptMessage;
-    
-    if (choice === '') {
-      promptMessage = 'You can\'t play unless you give me something! Rock, Paper, or Scissors?'
-    } else if (choice) {
-      promptMessage = `Whaddya mean, "${choice}"? Don't you know how to play this game? Rock, Paper, or Scissors?!`;
-    } else {
-      promptMessage = 'Don\'t you want to play???';
-    }
-
-    choice = prompt(promptMessage);
-  }
-
-  return parsedChoice();
-}
-
 // log round result and return an index representing the winner
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === computerSelection) {
@@ -56,20 +35,32 @@ function logScore(score) {
   console.log(`You: ${score[0]}, Computer: ${score[1]}`);
 }
 
-function logFinalResults(score) {
-  console.log('\nFINAL SCORE');
-  logScore(score);
-  
-  if (score[0] > score[1]) {
-    console.log('You Win!');
-  } else if (score[0] < score[1]) {
-    console.log('You Lose!');
-  } else {
-    console.log('Wow, I guess nobody wins lol');
-  }
+function buttonEvent() {
+  const playerChoice = this.dataset.choice;
+  playRound(playerChoice, getComputerChoice());
 }
 
-// 5 round game disabled for now...
+const buttons = document.querySelectorAll("button");
+buttons.forEach((btn) => btn.addEventListener("click", buttonEvent));
+
+
+/*
+5 round game disabled for now...
+*/
+
+// function logFinalResults(score) {
+//   console.log('\nFINAL SCORE');
+//   logScore(score);
+  
+//   if (score[0] > score[1]) {
+//     console.log('You Win!');
+//   } else if (score[0] < score[1]) {
+//     console.log('You Lose!');
+//   } else {
+//     console.log('Wow, I guess nobody wins lol');
+//   }
+// }
+
 // function game() {
 //   const totalRounds = 5;
 //   let score = [0, 0]; // player, computer
