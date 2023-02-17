@@ -69,27 +69,28 @@ function logFinalResults(score) {
   }
 }
 
-function game() {
-  const totalRounds = 5;
-  let score = [0, 0]; // player, computer
+// 5 round game disabled for now...
+// function game() {
+//   const totalRounds = 5;
+//   let score = [0, 0]; // player, computer
 
-  for (let round = 0; round < totalRounds; round++) {
-    console.log(`\nROUND ${round + 1}`);
+//   for (let round = 0; round < totalRounds; round++) {
+//     console.log(`\nROUND ${round + 1}`);
     
-    let winnerIndex = playRound(getPlayerChoice(), getComputerChoice());
-    score[winnerIndex]++;
+//     let winnerIndex = playRound(getPlayerChoice(), getComputerChoice());
+//     score[winnerIndex]++;
 
-    // end game if there's a winner
-    // don't log 'Current Score' on last iteration
-    if (score[0] > 2 || score[1] > 2 || round === totalRounds - 1) {
-      break;
-    }
+//     // end game if there's a winner
+//     // don't log 'Current Score' on last iteration
+//     if (score[0] > 2 || score[1] > 2 || round === totalRounds - 1) {
+//       break;
+//     }
 
-    console.log('Current Score:');
-    logScore(score);
-  }
+//     console.log('Current Score:');
+//     logScore(score);
+//   }
 
-  logFinalResults(score);
-}
+//   logFinalResults(score);
+// }
 
-game();
+// game();
