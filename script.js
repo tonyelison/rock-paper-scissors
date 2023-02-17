@@ -8,10 +8,15 @@ function getComputerChoice() {
   return CHOICES[index];
 }
 
+function showRoundResult(message) {
+  const resultDiv = document.getElementById("game-result");
+  resultDiv.textContent = message;
+}
+
 // log round result and return an index representing the winner
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === computerSelection) {
-    console.log(`Draw! You both chose ${playerSelection}.`);
+    showRoundResult(`Draw! You both chose ${playerSelection}.`);
     return -1;
   }
 
@@ -23,10 +28,10 @@ function playRound(playerSelection, computerSelection) {
   ];
 
   if (playerWinScenarios.find((scenario) => scenario.toString() === outcome.toString())) {
-    console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+    showRoundResult(`You win! ${playerSelection} beats ${computerSelection}`);
     return 0;
   } else {
-    console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
+    showRoundResult(`You lose! ${computerSelection} beats ${playerSelection}`);
     return 1;
   }
 }
